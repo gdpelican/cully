@@ -9,9 +9,19 @@ const Controls = () => {
 
   return (
     <div className="cully__controls">
-      <button style={{color: PRIMARY_COLOR}} disabled={!hasPrev} onClick={prev}>← BACK</button>
+      <button
+        tabIndex={1}
+        style={{color: PRIMARY_COLOR}}
+        disabled={!hasPrev}
+        onClick={prev}
+      >← BACK</button>
       <span>{currentPhoto.filename}</span>
-      <button style={{color: PRIMARY_COLOR}} disabled={!hasNext} onClick={next}>NEXT →</button>
+      <button
+        tabIndex={2}
+        style={{color: PRIMARY_COLOR}}
+        disabled={!hasNext}
+        onClick={next}
+      >NEXT →</button>
     </div>
   )
 }

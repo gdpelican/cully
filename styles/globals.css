@@ -21,6 +21,7 @@ a {
 
 .cully__main {
   border-top: 1rem solid;
+  padding-bottom: 0.4rem;
 }
 
 .cully__controls {
@@ -41,4 +42,8 @@ a {
 .cully__controls button:disabled {
   opacity: 0.3;
   cursor: default;
+}
+
+.cully__controls button:focus {
+  border: 4px solid;
 }
