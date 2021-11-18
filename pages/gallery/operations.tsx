@@ -5,8 +5,7 @@ export function compressPhoto(url: string, callback: Function): void {
   canvas.width = WIDTH
   canvas.height = HEIGHT
 
-  // TODO: host cors-anywhere for CORS workaround
-  fetch(`http://localhost:8080/${url}`)
+  fetch(`${process.env.NEXT_PUBLIC_PROXY_URL}/${url}`)
     .then(response => response.blob())
     .then((blob) => {
       const image = new Image()
