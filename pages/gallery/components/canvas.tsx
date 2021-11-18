@@ -8,7 +8,7 @@ import { Stage, Layer, Image, Rect } from 'react-konva'
 import useImage from 'use-image'
 
 const Canvas = () => {
-  const { currentPhoto } = useContext(Context)
+  const { currentPhoto, removeFace } = useContext(Context)
   const [image] = useImage(currentPhoto.compressed)
   const stage = useRef()
 
@@ -19,7 +19,14 @@ const Canvas = () => {
           <>
             <Background src={currentPhoto.compressed} />
             {currentPhoto.faces ? (
-              currentPhoto.faces.map((face) => <Frame key={face.id} stage={stage} {...face} />)
+              currentPhoto.faces.map((face) => (
+                <Frame
+                  key={face.id}
+                  stage={stage}
+                  remove={() => removeFace(face.id)}
+                  {...face}
+                />
+              ))
             ) : null}
           </>
         ) : (

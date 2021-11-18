@@ -15,8 +15,15 @@ export const useGalleryContext = (apiUrl) => {
 
   const updatePhoto = (id: string, photo: Photo): void => {
     setPhotos(photos => photos.map(p => (
-      p.id === id ? ({ ...photo, ...p }) : p
+      p.id === id ? ({ ...p, ...photo }) : p
     )))
+  }
+
+  const removeFace = (id: string): void => {
+    updatePhoto(currentPhoto.id, {
+      ...currentPhoto,
+      faces: currentPhoto.faces.filter((face) => face.id !== id)
+    })
   }
 
   // perform initial fetch of images
@@ -53,6 +60,7 @@ export const useGalleryContext = (apiUrl) => {
 
   return {
     currentPhoto,
+    removeFace,
     hasPrev, prev: () => setCurrentIndex(index => index - 1),
     hasNext, next: () => setCurrentIndex(index => index + 1)
   }
