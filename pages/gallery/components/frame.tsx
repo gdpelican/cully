@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { Tag, Text, Label, Rect } from 'react-konva'
 import { WIDTH, HEIGHT, PRIMARY_COLOR, SECONDARY_COLOR } from '../constants'
 
@@ -6,6 +6,7 @@ const Frame = ({ id, xmin, xmax, ymin, ymax, stage, remove }) => {
   const [hover, setHover] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const active = useMemo(() => hover || showMenu, [hover, showMenu])
+  const frame = useRef()
 
   const strokeWidth: number = useMemo(() => active ? 4 : 2, [active])
   const stroke: string = useMemo(() => active ? SECONDARY_COLOR : PRIMARY_COLOR, [active])
@@ -15,9 +16,16 @@ const Frame = ({ id, xmin, xmax, ymin, ymax, stage, remove }) => {
     stage.current.container().style.cursor = hover ? 'pointer' : 'default'
   }, [hover])
 
+  stage.current.on('click', (e) => {
+    if (!showMenu || e.target === frame.current) return
+
+    setShowMenu(false)
+  })
+
   return (
     <>
       <Rect
+        ref={frame}
         cornerRadius={showMenu ? [5, 5, 5, 0] : 5}
         x={WIDTH * xmin}
         y={HEIGHT * ymin}
