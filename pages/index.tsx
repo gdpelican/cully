@@ -1,5 +1,9 @@
 import type { NextPage } from 'next'
-import Gallery from './gallery'
+import dynamic from 'next/dynamic'
+
+const Gallery = dynamic(() => import("./gallery"), {
+  ssr: false,
+})
 
 const Home: NextPage = () => {
   return <Gallery />
