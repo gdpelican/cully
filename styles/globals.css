@@ -14,3 +14,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.konvajs-content {
+  margin: 1rem auto;
+}
+
+.cully__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem;
+}

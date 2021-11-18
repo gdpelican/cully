@@ -2,12 +2,12 @@ import React, { useContext } from 'react'
 import Context from '../context'
 
 const Controls = () => {
-  const { prev, next, hasPrev, hasNext } = useContext(Context)
+  const { currentPhoto, prev, next, hasPrev, hasNext } = useContext(Context)
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div class="cully__controls">
       <button disabled={!hasPrev} onClick={prev}>BACK</button>
-      <span>CONTROLS</span>
+      <span>{currentPhoto.filename}</span>
       <button disabled={!hasNext} onClick={next}>NEXT</button>
     </div>
   )
