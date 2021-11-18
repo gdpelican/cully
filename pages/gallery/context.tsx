@@ -1,4 +1,4 @@
-import { createContext, useState, useMemo, useRef, useEffect } from 'react'
+import { createContext, useState, useMemo, useEffect } from 'react'
 import type { Face, Photo } from './types'
 import { compressPhoto } from './operations'
 
@@ -11,8 +11,6 @@ export const useGalleryContext = (apiUrl) => {
   const currentPhoto: Photo = useMemo(() => (photos[currentIndex] || {}), [currentIndex, photos])
   const hasPrev: boolean    = useMemo(() => currentIndex > 0, [currentIndex])
   const hasNext: boolean    = useMemo(() => currentIndex < photos.length - 1, [currentIndex, photos])
-
-  const canvas: Ref = useRef()
 
   const updatePhoto = (id: string, photo: Photo): void => {
     setPhotos(photos => photos.map(p => (
@@ -46,7 +44,6 @@ export const useGalleryContext = (apiUrl) => {
   }, [currentPhoto.url, apiUrl])
 
   return {
-    canvas,
     currentPhoto,
     hasPrev, prev: () => setCurrentIndex(index => index - 1),
     hasNext, next: () => setCurrentIndex(index => index + 1)
