@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import Context from '../context'
 import Background from './background'
 import Frame from './frame'
+import Loading from './loading'
 import { WIDTH, HEIGHT } from '../constants'
 import { Stage, Layer, Image, Rect } from 'react-konva'
 import useImage from 'use-image'
@@ -20,7 +21,9 @@ const Canvas = () => {
               currentPhoto.faces.map((face) => <Frame key={face.id} {...face} />)
             ) : null}
           </>
-        ) : null}
+        ) : (
+          <Loading />
+        )}
       </Layer>
     </Stage>
   )

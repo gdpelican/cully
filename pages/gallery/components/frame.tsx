@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Rect } from 'react-konva'
-import { WIDTH, HEIGHT } from '../constants'
+import { WIDTH, HEIGHT, PRIMARY_COLOR } from '../constants'
 
 const Frame = (face: Face) => {
   const { xmin, xmax, ymin, ymax } = face
@@ -11,7 +11,7 @@ const Frame = (face: Face) => {
     y={HEIGHT * ymin}
     width={(WIDTH * xmax) - (WIDTH * xmin)}
     height={(HEIGHT * ymax) - (HEIGHT * ymin)}
-    stroke="darkorchid"
+    stroke={PRIMARY_COLOR}
   />
 }
 
