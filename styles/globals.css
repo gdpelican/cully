@@ -16,7 +16,11 @@ a {
 }
 
 .konvajs-content {
-  margin: 1rem auto;
+  margin: auto;
+}
+
+.cully__main {
+  border-top: 1rem solid;
 }
 
 .cully__controls {
@@ -24,4 +28,12 @@ a {
   align-items: center;
   justify-content: space-between;
   margin: 1rem;
+}
+
+.cully__controls button {
+  padding: 0.4rem 1.2rem;
+  border: 2px solid;
+  cursor: pointer;
+  background: white;
+  border-radius: 0.4rem;
 }
