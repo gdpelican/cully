@@ -12,7 +12,7 @@ export default createContext({
   next: () => {}
 })
 
-export const useGalleryContext = (apiUrl: string) => {
+export const useCullyContext = (apiUrl: string) => {
   const [photos, setPhotos] = useState<Array<Photo>>([])
   const [currentIndex, setCurrentIndex] = useState<number>(0)
 
