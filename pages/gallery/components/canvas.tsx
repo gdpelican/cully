@@ -5,12 +5,12 @@ import Frame from './frame'
 import Loading from './loading'
 import { WIDTH, HEIGHT } from '../constants'
 import { Stage, Layer, Image, Rect } from 'react-konva'
+import { GalleryContext } from '../types'
 import useImage from 'use-image'
 
 const Canvas = () => {
-  const { currentPhoto, removeFace } = useContext(Context)
-  const [image] = useImage(currentPhoto.compressed)
-  const stage = useRef()
+  const { currentPhoto, removeFace }: GalleryContext = useContext(Context)
+  const stage = useRef(null)
 
   return (
     <Stage ref={stage} width={WIDTH} height={HEIGHT}>

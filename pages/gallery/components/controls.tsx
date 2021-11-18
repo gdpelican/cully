@@ -1,9 +1,10 @@
 import React, { useContext } from 'react'
 import Context from '../context'
 import { PRIMARY_COLOR } from '../constants'
+import { GalleryContext } from '../types'
 
 const Controls = () => {
-  const { currentPhoto, prev, next, hasPrev, hasNext } = useContext(Context)
+  const { currentPhoto, prev, next, hasPrev, hasNext }: GalleryContext = useContext(Context)
 
   return (
     <div className="cully__controls">

@@ -8,7 +8,7 @@ export function compressPhoto(url: string, callback: Function): void {
   fetch(`${process.env.NEXT_PUBLIC_PROXY_URL}/${url}`)
     .then(response => response.blob())
     .then((blob) => {
-      const image = new Image()
+      const image: Image = new Image()
       image.src = URL.createObjectURL(blob)
       image.onload = () => {
         canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height)

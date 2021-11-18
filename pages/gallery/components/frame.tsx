@@ -1,12 +1,19 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { Tag, Text, Label, Rect } from 'react-konva'
+import { Face } from '../types'
 import { WIDTH, HEIGHT, PRIMARY_COLOR, SECONDARY_COLOR } from '../constants'
 
-const Frame = ({ id, xmin, xmax, ymin, ymax, stage, remove }) => {
+interface FrameProps extends Face {
+  id: string,
+  remove: () => void
+  stage: any
+}
+
+const Frame = ({ id, xmin, xmax, ymin, ymax, stage, remove }: FrameProps) => {
   const [hover, setHover] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const active = useMemo(() => hover || showMenu, [hover, showMenu])
-  const frame = useRef()
+  const frame = useRef(null)
 
   const strokeWidth: number = useMemo(() => active ? 4 : 2, [active])
   const stroke: string = useMemo(() => active ? SECONDARY_COLOR : PRIMARY_COLOR, [active])
@@ -16,7 +23,7 @@ const Frame = ({ id, xmin, xmax, ymin, ymax, stage, remove }) => {
     stage.current.container().style.cursor = hover ? 'pointer' : 'default'
   }, [hover])
 
-  stage.current.on('click', (e) => {
+  stage.current.on('click', (e: MouseEvent) => {
     if (!showMenu || e.target === frame.current) return
 
     setShowMenu(false)

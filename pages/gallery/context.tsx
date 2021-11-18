@@ -1,11 +1,18 @@
 import { createContext, useState, useMemo, useEffect } from 'react'
-import type { Face, Photo } from './types'
+import type { Face, Photo, PartialPhoto, ApiResponse } from './types'
 import { compressPhoto } from './operations'
 
-export default createContext({})
+export default createContext({
+  currentPhoto: {},
+  removeFace: () => {},
+  hasPrev: false,
+  hasNext: false,
+  prev: () => {},
+  next: () => {}
+})
 
-export const useGalleryContext = (apiUrl) => {
-  const [photos, setPhotos] = useState<Array<Image>>([])
+export const useGalleryContext = (apiUrl: string) => {
+  const [photos, setPhotos] = useState<Array<Photo>>([])
   const [currentIndex, setCurrentIndex] = useState<number>(0)
 
   const currentPhoto: Photo = useMemo(() => (photos[currentIndex] || {}), [currentIndex, photos])
@@ -13,7 +20,7 @@ export const useGalleryContext = (apiUrl) => {
   const hasPrev: boolean    = useMemo(() => currentIndex > 0, [currentIndex])
   const hasNext: boolean    = useMemo(() => currentIndex < photos.length - 1, [currentIndex, photos])
 
-  const updatePhoto = (id: string, photo: Photo): void => {
+  const updatePhoto = (id: string, photo: PartialPhoto): void => {
     setPhotos(photos => photos.map(p => (
       p.id === id ? ({ ...p, ...photo }) : p
     )))
@@ -22,7 +29,7 @@ export const useGalleryContext = (apiUrl) => {
   const removeFace = (id: string): void => {
     updatePhoto(currentPhoto.id, {
       ...currentPhoto,
-      faces: currentPhoto.faces.filter((face) => face.id !== id)
+      faces: currentPhoto.faces!.filter((face) => face.id !== id)
     })
   }
 
@@ -40,7 +47,7 @@ export const useGalleryContext = (apiUrl) => {
 
     fetch(`${apiUrl}/images/${currentPhoto.id}/faces`)
       .then(response => response.json())
-      .then(({ data }) => { updatePhoto(currentPhoto.id, { faces: data }) })
+      .then(({ data }: ApiResponse) => { updatePhoto(currentPhoto.id, { faces: data }) })
       .catch((error) => { updatePhoto(currentPhoto.id, { faces: [] }) })
   }, [currentPhoto.url, apiUrl])
 
