@@ -1,8 +1,9 @@
+import { WIDTH, HEIGHT } from './constants'
+
 export function compressPhoto(url: string, callback: Function): void {
   const canvas: HTMLCanvasElement = document.createElement('canvas')
-  // TODO: dynamic sizing
-  canvas.width = 900
-  canvas.height = 600
+  canvas.width = WIDTH
+  canvas.height = HEIGHT
 
   // TODO: host cors-anywhere for CORS workaround
   fetch(`http://localhost:8080/${url}`)
