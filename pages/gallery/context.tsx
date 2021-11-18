@@ -1,6 +1,6 @@
 import { createContext, useState, useMemo, useRef, useEffect } from 'react'
 import type { Face, Photo } from './types'
-import { compressPhoto, applyBlobToCanvas } from './operations'
+import { compressPhoto } from './operations'
 
 export default createContext({})
 
@@ -44,13 +44,6 @@ export const useGalleryContext = (apiUrl) => {
 
     compressPhoto(currentPhoto.url, (compressed) => updatePhoto(currentPhoto.id, { compressed }))
   }, [currentPhoto.url, apiUrl])
-
-  // draw current photo onto canvas
-  useEffect(() => {
-    if (!canvas.current || !currentPhoto.compressed) return
-
-    applyBlobToCanvas(currentPhoto.compressed, () => {}, canvas.current)
-  }, [currentPhoto.compressed, canvas.current])
 
   return {
     canvas,
