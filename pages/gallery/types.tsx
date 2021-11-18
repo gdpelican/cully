@@ -15,7 +15,7 @@ export interface Photo {
 }
 
 export interface PartialPhoto {
-  id?: null,
+  id?: string,
   filename?: string,
   url?: string,
   faces?: Array<Face>,

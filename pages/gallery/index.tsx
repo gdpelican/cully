@@ -7,7 +7,7 @@ import { PRIMARY_COLOR } from './constants'
 
 const Gallery = () => {
   return (
-    <Context.Provider value={useGalleryContext(process.env.NEXT_PUBLIC_API_URL)}>
+    <Context.Provider value={useGalleryContext(process.env.NEXT_PUBLIC_API_URL!)}>
       <main style={{ borderColor: PRIMARY_COLOR }} className="cully__main">
         <Canvas />
         <Controls />

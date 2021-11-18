@@ -4,13 +4,14 @@ import useImage from 'use-image'
 import { WIDTH, HEIGHT } from '../constants'
 
 interface BackgroundProps {
-  src: string
+  src: string,
+  alt?: string
 }
 
-const Background = ({ src }: BackgroundProps) => {
+const Background = ({ src, alt }: BackgroundProps) => {
   const [image] = useImage(src)
 
-  return <Image x={0} y={0} width={WIDTH} height={HEIGHT} image={image} />
+  return <Image x={0} y={0} width={WIDTH} height={HEIGHT} image={image} alt={alt} />
 }
 
 export default Background

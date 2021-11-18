@@ -4,7 +4,7 @@ import { compressPhoto } from './operations'
 
 export default createContext({
   currentPhoto: {},
-  removeFace: () => {},
+  removeFace: (id: string) => {},
   hasPrev: false,
   hasNext: false,
   prev: () => {},
@@ -21,7 +21,7 @@ export const useGalleryContext = (apiUrl: string) => {
   const hasNext: boolean    = useMemo(() => currentIndex < photos.length - 1, [currentIndex, photos])
 
   const updatePhoto = (id: string, photo: PartialPhoto): void => {
-    setPhotos(photos => photos.map(p => (
+    setPhotos(photos => photos.map((p: Photo) => (
       p.id === id ? ({ ...p, ...photo }) : p
     )))
   }
@@ -55,14 +55,14 @@ export const useGalleryContext = (apiUrl: string) => {
   useEffect(() => {
     if (!currentPhoto.url || currentPhoto.compressed) { return }
 
-    compressPhoto(currentPhoto.url, (compressed) => updatePhoto(currentPhoto.id, { compressed }))
+    compressPhoto(currentPhoto.url, (compressed: string) => updatePhoto(currentPhoto.id, { compressed }))
   }, [currentPhoto.url, apiUrl])
 
   // compress next image if it hasn't been compressed already
   useEffect(() => {
     if (!nextPhoto.url || nextPhoto.compressed) { return }
 
-    compressPhoto(nextPhoto.url, (compressed) => updatePhoto(nextPhoto.id, { compressed }))
+    compressPhoto(nextPhoto.url, (compressed: string) => updatePhoto(nextPhoto.id, { compressed }))
   }, [nextPhoto.url, apiUrl])
 
   return {

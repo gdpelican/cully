@@ -17,7 +17,7 @@ const Canvas = () => {
       <Layer>
         {currentPhoto.compressed ? (
           <>
-            <Background src={currentPhoto.compressed} />
+            <Background src={currentPhoto.compressed} alt={currentPhoto.filename} />
             {currentPhoto.faces ? (
               currentPhoto.faces.map((face) => (
                 <Frame
