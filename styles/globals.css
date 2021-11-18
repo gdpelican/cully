@@ -37,3 +37,8 @@ a {
   background: white;
   border-radius: 0.4rem;
 }
+
+.cully__controls button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
