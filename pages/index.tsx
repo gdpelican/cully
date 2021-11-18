@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, KeyboardEvent } from 'react'
 import type { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 
@@ -10,7 +10,7 @@ import { PRIMARY_COLOR } from '../lib/constants'
 
 const Index: NextPage = () => {
   const context = useCullyContext(process.env.NEXT_PUBLIC_API_URL!)
-  const main = useRef()
+  const main = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!main.current) return
@@ -23,9 +23,9 @@ const Index: NextPage = () => {
       <main
         ref={main}
         style={{ borderColor: PRIMARY_COLOR }} className="cully__main"
-        tabIndex="0"
-        onKeyDown={({ which }: MouseEvent) => {
-          switch(which) {
+        tabIndex={0}
+        onKeyDown={(e: KeyboardEvent) => {
+          switch(e.which) {
             case 37: context.hasPrev && context.prev(); break
             case 39: context.hasNext && context.next(); break
           }
