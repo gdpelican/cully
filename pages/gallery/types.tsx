@@ -6,9 +6,10 @@ export interface Face {
   ymax: number
 }
 
-export interface Image {
+export interface Photo {
   id: string,
   filename: string,
   url: string,
-  faces?: Array<Face>
+  faces?: Array<Face>,
+  compressed?: string
 }

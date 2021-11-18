@@ -1,41 +1,60 @@
-import { createContext, useState, useMemo, useEffect } from 'react'
-import type { Face, Image } from './types'
+import { createContext, useState, useMemo, useRef, useEffect } from 'react'
+import type { Face, Photo } from './types'
+import { compressPhoto, applyBlobToCanvas } from './operations'
 
 export default createContext({})
 
 export const useGalleryContext = (apiUrl) => {
-  const [images, setImages] = useState<Array<Image>>([])
+  const [photos, setPhotos] = useState<Array<Image>>([])
   const [currentIndex, setCurrentIndex] = useState<number>(0)
 
-  const currentImage: (Image | undefined) = useMemo(() => images[currentIndex], [currentIndex, images])
-  const hasPrev: boolean                  = useMemo(() => currentIndex > 0, [currentIndex])
-  const hasNext: boolean                  = useMemo(() => currentIndex < images.length - 1, [currentIndex, images])
+  const currentPhoto: Photo = useMemo(() => (photos[currentIndex] || {}), [currentIndex, photos])
+  const hasPrev: boolean    = useMemo(() => currentIndex > 0, [currentIndex])
+  const hasNext: boolean    = useMemo(() => currentIndex < photos.length - 1, [currentIndex, photos])
 
-  useEffect(() => {
-    fetch(`${apiUrl}/images`)
-      .then(response => response.json())
-      .then(({ data }) => setImages(data))
-      .catch(console.error)
-  }, [apiUrl])
+  const canvas: Ref = useRef()
 
-  const setFaces = (id: string, faces: Array<Face>) => {
-    setImages(images => images.map(image => (
-      image.id === id ? ({ faces, ...image }) : image
+  const updatePhoto = (id: string, photo: Photo): void => {
+    setPhotos(photos => photos.map(p => (
+      p.id === id ? ({ ...photo, ...p }) : p
     )))
   }
 
+  // perform initial fetch of images
   useEffect(() => {
-    if (!currentImage || currentImage.faces) { return }
-
-    fetch(`${apiUrl}/images/${currentImage.id}/faces`)
+    fetch(`${apiUrl}/images`)
       .then(response => response.json())
-      .then(({ data }) => { setFaces(currentImage.id, data) })
-      .catch((error) => { setFaces(currentImage.id, []) })
-  }, [currentImage, apiUrl])
+      .then(({ data }) => setPhotos(data))
+      .catch(console.error)
+  }, [apiUrl])
+
+  // fetch faces for image if they haven't been fetched already
+  useEffect(() => {
+    if (!currentPhoto.url || currentPhoto.faces) return
+
+    fetch(`${apiUrl}/images/${currentPhoto.id}/faces`)
+      .then(response => response.json())
+      .then(({ data }) => { updatePhoto(currentPhoto.id, { faces: data }) })
+      .catch((error) => { updatePhoto(currentPhoto.id, { faces: [] }) })
+  }, [currentPhoto.url, apiUrl])
+
+  // compress image if it hasn't been compressed already
+  useEffect(() => {
+    if (!currentPhoto.url || currentPhoto.compressed) { return }
+
+    compressPhoto(currentPhoto.url, (compressed) => updatePhoto(currentPhoto.id, { compressed }))
+  }, [currentPhoto.url, apiUrl])
+
+  // draw current photo onto canvas
+  useEffect(() => {
+    if (!canvas.current || !currentPhoto.compressed) return
+
+    applyBlobToCanvas(currentPhoto.compressed, () => {}, canvas.current)
+  }, [currentPhoto.compressed, canvas.current])
 
   return {
-    images,
-    currentImage,
+    canvas,
+    currentPhoto,
     hasPrev, prev: () => setCurrentIndex(index => index - 1),
     hasNext, next: () => setCurrentIndex(index => index + 1)
   }

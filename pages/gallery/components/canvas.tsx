@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import Context from '../context'
 
 const Canvas = () => {
-  const { currentImage } = useContext(Context)
+  const { canvas, currentPhoto } = useContext(Context)
 
-  return currentImage ? (
-    <div>{JSON.stringify(currentImage)}</div>
+  return currentPhoto.url ? (
+    <canvas ref={canvas} width="1200" height="800" />
   ) : (
     <div>Loading...</div>
   )
