@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useRef } from 'react'
-import Context from '../context'
+import { Stage, Layer, Image, Rect } from 'react-konva'
+import useImage from 'use-image'
+
+import Context from '../lib/context'
+import { WIDTH, HEIGHT } from '../lib/constants'
+import { GalleryContext } from '../lib/types'
+
 import Background from './background'
 import Frame from './frame'
 import Loading from './loading'
-import { WIDTH, HEIGHT } from '../constants'
-import { Stage, Layer, Image, Rect } from 'react-konva'
-import { GalleryContext } from '../types'
-import useImage from 'use-image'
 
 const Canvas = () => {
   const { currentPhoto, removeFace }: GalleryContext = useContext(Context)

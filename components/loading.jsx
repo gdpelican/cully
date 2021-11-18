@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react'
 import { Rect } from 'react-konva'
 import Konva from 'konva'
-import { WIDTH, HEIGHT, LOADING, PRIMARY_COLOR } from '../constants'
+
+import { WIDTH, HEIGHT, LOADING, PRIMARY_COLOR } from '../lib/constants'
 
 const Loading = () => {
   const loader = useRef()

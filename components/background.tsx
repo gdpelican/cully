@@ -1,7 +1,8 @@
 import React from 'react'
 import { Image } from 'react-konva'
 import useImage from 'use-image'
-import { WIDTH, HEIGHT } from '../constants'
+
+import { WIDTH, HEIGHT } from '../lib/constants'
 
 interface BackgroundProps {
   src: string,

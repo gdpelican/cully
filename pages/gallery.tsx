@@ -1,9 +1,10 @@
 import React from 'react'
-import Context, { useGalleryContext } from './context'
-import Canvas from './components/canvas'
-import Controls from './components/controls'
 
-import { PRIMARY_COLOR } from './constants'
+import Canvas from '../components/canvas'
+import Controls from '../components/controls'
+
+import Context, { useGalleryContext } from '../lib/context'
+import { PRIMARY_COLOR } from '../lib/constants'
 
 const Gallery = () => {
   return (

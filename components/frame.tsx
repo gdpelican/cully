@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { Tag, Text, Label, Rect } from 'react-konva'
-import { Face } from '../types'
-import { WIDTH, HEIGHT, PRIMARY_COLOR, SECONDARY_COLOR } from '../constants'
+
+import { Face } from '../lib/types'
+import { WIDTH, HEIGHT, PRIMARY_COLOR, SECONDARY_COLOR } from '../lib/constants'
 
 interface FrameProps extends Face {
   id: string,

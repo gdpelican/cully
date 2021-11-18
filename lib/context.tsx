@@ -1,5 +1,6 @@
 import { createContext, useState, useMemo, useEffect } from 'react'
-import type { Face, Photo, PartialPhoto, ApiResponse } from './types'
+
+import { Face, Photo, PartialPhoto, ApiResponse } from './types'
 import { compressPhoto } from './operations'
 
 export default createContext({

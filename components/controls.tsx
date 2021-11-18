@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
-import Context from '../context'
-import { PRIMARY_COLOR } from '../constants'
-import { GalleryContext } from '../types'
+
+import Context from '../lib/context'
+import { PRIMARY_COLOR } from '../lib/constants'
+import { GalleryContext } from '../lib/types'
 
 const Controls = () => {
   const { currentPhoto, prev, next, hasPrev, hasNext }: GalleryContext = useContext(Context)
