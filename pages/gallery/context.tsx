@@ -9,6 +9,7 @@ export const useGalleryContext = (apiUrl) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0)
 
   const currentPhoto: Photo = useMemo(() => (photos[currentIndex] || {}), [currentIndex, photos])
+  const nextPhoto: Photo    = useMemo(() => (photos[currentIndex + 1] || {}), [currentIndex, photos])
   const hasPrev: boolean    = useMemo(() => currentIndex > 0, [currentIndex])
   const hasNext: boolean    = useMemo(() => currentIndex < photos.length - 1, [currentIndex, photos])
 
@@ -42,6 +43,13 @@ export const useGalleryContext = (apiUrl) => {
 
     compressPhoto(currentPhoto.url, (compressed) => updatePhoto(currentPhoto.id, { compressed }))
   }, [currentPhoto.url, apiUrl])
+
+  // compress next image if it hasn't been compressed already
+  useEffect(() => {
+    if (!nextPhoto.url || nextPhoto.compressed) { return }
+
+    compressPhoto(nextPhoto.url, (compressed) => updatePhoto(nextPhoto.id, { compressed }))
+  }, [nextPhoto.url, apiUrl])
 
   return {
     currentPhoto,
